@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#lire le fichier d'urls et produire et produire un fichier html contenant un tableau avec 2 colonnes : n° d'URL et adresse URL
+
+#echo "Où est le fichier d'URLS?"
+read dossierurls ; 
+let fichier_tableau < "../TABLEAUX" ;
+echo "fichier d'URL1: $fichier_urls1" ;
+echo "fichier d'URL1: $fichier_urls2" ;
+echo "fichier de sortie: $fichier_tableau"
+compteurtableau=1
+echo "<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>" > $fichier_tableau ;
+
+for fichier in `ls dossierurls`;
+{
+	#construire le tableau associé au fichier d'urls
+	compteur=1
+		echo "<table align=\"center\"border=\"1\">" >> $fichier_tableau ; #on alligne et on crée des bords
+	for line in `cat $dossierurls/$fichier`
+	{
+	wget $line -O ./PAGES-ASPIREES/url_$compteurtableau_$compteur.html #aspiration de page
+	echo "<tr><td>$compteur</td><td><a href=\"$line\">$line</a></td></tr>"; #on ouvre une ligne, une cellule pui on fait un lien sur le contenu de la cellule 2
+	echo "<tr><td colqpan=`"3\">tableau n°$compteur</a></td><td><a href=\"./PAGES-ASPIREES/url_$compteurtableau_$compteur.html\">PA N°$compteurtableau_$compteur</a></td></tr>"
+	let "compteur+=1"; 
+	} done
+	echo "</table>" >> $fichier_tableau ; #on ferme le tableau
+}
+echo "</body></html>" >> $fichier_tableau ; #on ferme le contenu et la page html
+
+#autre type de boucle
+#while read ligne
+#do
+#  echo "2 $ligne";
+#done
